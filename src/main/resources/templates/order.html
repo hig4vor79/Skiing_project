@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title th:text="|Order ${order.id}|"></title>
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: header}"></div>
+
+<div class="catalog">
+    <div class="product" th:each="flower : ${order.products}" th:object="${flower}">
+        <a th:href="@{/catalog/{id}(id=*{id})}">
+            <img th:src="*{pictureUrl}">
+        </a>
+        <div class="title" th:text="*{name}"></div>
+        <p th:text="|*{price}₴|"></p>
+    </div>
+</div>
+</body>
+</html>

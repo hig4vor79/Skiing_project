@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Orders</title>
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: header}"></div>
+
+<div class="catalog">
+    <div class="product" th:each="order : ${orders}" th:object="${order}">
+        <a th:href="@{/orders/{id}(id=*{id})}">
+            <img th:if="*{not #sets.isEmpty(products)}" th:src="*{products.iterator().next().pictureUrl}">
+        </a>
+        <div class="title" th:text="*{id}"></div>
+        <p th:text="|*{price}₴|"></p>
+        <div class="order-status" th:text="*{getStatus()}"></div>
+        <div class="order-interface" th:switch="${user.role.name()}">
+            <div th:case="'MANAGER'">
+                <form th:if="*{getStatus() == 'New'}" th:action="@{/orders/accept/manager/{id}(id=*{id})}"
+                      method="post">
+                    <button class="btn">Accept</button>
+                </form>
+                <form th:if="*{getStatus() == 'Delivered'}" th:action="@{/orders/done/{id}(id=*{id})}" method="post">
+                    <button class="btn">Done</button>
+                </form>
+            </div>
+            <div th:case="'COURIER'">
+                <form th:if="*{getStatus() == 'Accepted'}" th:action="@{/orders/accept/courier/{id}(id=*{id})}"
+                      method="post">
+                    <button class="btn">Delivery</button>
+                </form>
+                <form th:if="*{getStatus() == 'Delivery'}" th:action="@{/orders/accept/courier/{id}(id=*{id})}"
+                      method="post">
+                    <button class="btn">Delivered</button>
+                </form>
+            </div>
+            <form th:if="*{!canceled && endDate == null}" th:action="@{/orders/cancel/{id}(id=*{id})}" method="post">
+                <button class="btn">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

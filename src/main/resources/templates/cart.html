@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Cart</title>
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: header}"></div>
+<div class="detail">
+    <form class="input-form" th:action="@{/orders/create}" method="post" th:if="${sessionIsPresent}">
+        <input name="delivery" type="text" placeholder="Delivery address" minlength="10" required>
+        <button class="btn">Create order</button>
+    </form>
+    <div class="catalog">
+        <div class="product" th:each="flower : ${cart}" th:object="${flower}">
+            <a th:href="@{/catalog/{id}(id=*{id})}">
+                <img th:src="*{pictureUrl}">
+            </a>
+            <div class="title" th:text="*{name}"></div>
+            <div class="store" th:style="*{count > 0} ? 'color: #2acd12' : 'color: #ff4235'"
+                 th:text="*{count > 0} ? 'In stock':'Not in stock'"></div>
+            <form th:action="@{/cart/remove/{id}(id=*{id})}" method="post">
+                <button class="btn">Remove</button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

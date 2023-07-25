@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <title th:text="${user.name}">Account</title>
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: header}"></div>
+
+<div class="content">
+  <form class="input-form" method="post" th:object="${user}">
+    <h1 th:text="|Name: *{name}|"></h1>
+    <p th:text="|Surname: *{surname}|"></p>
+    <p th:text="|Email: *{email}|"></p>
+    <p th:text="|Phone: *{phone}|"></p>
+    <p th:if="*{role.name() != 'CLIENT'}" th:text="|Role: *{role}|"></p>
+    <button class="btn">Exit</button>
+  </form>
+</div>
+</body>
+</html>

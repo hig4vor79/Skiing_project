@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Sign in</title>
+</head>
+<body>
+<div th:replace="~{fragments/header.html :: header}"></div>
+
+<div class="login-form">
+    <form class="input-form" method="post" th:object="${user}">
+        <h1>Sign in</h1>
+        <p class="error" th:if="${error}">Email or phone is already exists</p>
+        <input placeholder="Name" th:field="*{name}" required>
+        <input placeholder="Surname" th:field="*{surname}" required>
+        <input placeholder="Email" type="email" th:field="*{email}" required>
+        <input placeholder="Phone" type="tel" pattern="^\+380\d{9}$" th:field="*{phone}" required>
+        <input placeholder="Password" th:field="*{password}" minlength="8" type="password" required>
+        <button class="btn">Sign in</button>
+    </form>
+</div>
+</body>
+</html>

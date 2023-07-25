@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<header th:fragment="header">
+    <div class="link-container">
+        <a class="link" th:href="@{/catalog}">Catalog</a>
+    </div>
+    <div>
+        <a class="cart-link" th:href="@{/orders}">
+            <img class="icon" th:src="@{/images/order.svg}">
+        </a>
+        <a class="cart-link" th:href="@{/cart}">
+            <img class="icon" th:src="@{/images/shopping-cart.svg}">
+        </a>
+        <a class="account-link" th:href="@{/account}">
+            <img class="icon" th:src="@{/images/account-icon.svg}">
+        </a>
+    </div>
+</header>
+</body>
+</html>
